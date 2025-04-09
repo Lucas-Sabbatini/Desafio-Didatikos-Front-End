@@ -1,0 +1,50 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar Usuário' : 'Adicionar Usuário' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="userForm" class="dialog-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="userForm.get('name')?.hasError('required')">
+        Nome é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="password" type="password" required>
+      <mat-error *ngIf="userForm.get('password')?.hasError('required')">
+        Senha é obrigatória
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>CPF</mat-label>
+      <input matInput formControlName="cpf" required>
+      <mat-error *ngIf="userForm.get('cpf')?.hasError('required')">
+        CPF é obrigatório
+      </mat-error>
+      <mat-error *ngIf="userForm.get('cpf')?.hasError('pattern')">
+        CPF deve ter 11 dígitos
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Função</mat-label>
+      <mat-select formControlName="role" required>
+        <mat-option value="USER">Usuário</mat-option>
+        <mat-option value="ADMIN">Administrador</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userForm.get('role')?.hasError('required')">
+        Função é obrigatória
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!userForm.valid">
+    {{ isEdit ? 'Atualizar' : 'Criar' }}
+  </button>
+</mat-dialog-actions> 
